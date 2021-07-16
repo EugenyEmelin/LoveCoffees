@@ -8,6 +8,8 @@ import { EventEntity } from '../events/entities/event.entity';
 import { COFFEE_BRANDS } from './coffees.constants';
 import { ConfigModule } from '@nestjs/config';
 import coffeesConfig from './config/coffees.config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { CoffeeModel, CoffeeSchema } from './schemas/coffee.schema';
 
 @Module({
   controllers: [CoffeesController],
@@ -24,6 +26,12 @@ import coffeesConfig from './config/coffees.config';
       Coffee,
       Flavor,
       EventEntity
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: CoffeeModel.name,
+        schema: CoffeeSchema,
+      }
     ]),
     ConfigModule.forFeature(coffeesConfig)
   ],

@@ -1,4 +1,4 @@
-import { Module, ValidationPipe } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -6,9 +6,9 @@ import { CoffeesModule } from './coffees/coffees.module';
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
-import * as Joi from '@hapi/joi';
 import { appConfig } from './config/app.config';
-import { APP_PIPE } from '@nestjs/core';
+import { CommonModule } from './common/common.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -24,12 +24,14 @@ import { APP_PIPE } from '@nestjs/core';
         synchronize: true,
       })
     }),
+    MongooseModule.forRoot('mongodb://localhost:27017/nest-js-fundamentals_db_1'),
     ConfigModule.forRoot({
       load: [appConfig]
     }),
     CoffeesModule,
     CoffeeRatingModule,
-    DatabaseModule
+    DatabaseModule,
+    CommonModule
   ],
   controllers: [AppController],
   providers: [

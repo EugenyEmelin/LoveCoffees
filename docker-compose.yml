@@ -2,15 +2,9 @@ version: '3.1'
 
 services:
   db:
-    image: postgres
+    image: mongo
     restart: always
     ports:
-      - 5432:5432
+    - 27017:27017
     environment:
-      POSTGRES_PASSWORD: 151190qqq
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+      MONGODB_DATABASE: love-coffee-db

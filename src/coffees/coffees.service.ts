@@ -9,6 +9,9 @@ import { PaginationQueryDto } from '../common/dto/pagination.dto';
 import { EventEntity } from '../events/entities/event.entity';
 import { ConfigType } from '@nestjs/config';
 import coffeesConfig from './config/coffees.config';
+import { InjectModel } from '@nestjs/mongoose';
+import { CoffeeModel } from './schemas/coffee.schema';
+import { Model } from 'mongoose'
 
 @Injectable()
 export class CoffeesService {
@@ -16,7 +19,8 @@ export class CoffeesService {
     @InjectRepository(Coffee) private readonly coffeeRepository: Repository<Coffee>,
     @InjectRepository(Flavor) private readonly flavorRepository: Repository<Flavor>,
     private readonly connection: Connection,
-    @Inject(coffeesConfig.KEY) private readonly coffeesConfiguration: ConfigType<typeof coffeesConfig>
+    @Inject(coffeesConfig.KEY) private readonly coffeesConfiguration: ConfigType<typeof coffeesConfig>,
+    @InjectModel(CoffeeModel.name) private readonly coffeeModel: Model<CoffeeModel>
   ) {
     console.log(coffeesConfiguration)
   }
